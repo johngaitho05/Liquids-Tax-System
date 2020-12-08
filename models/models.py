@@ -18,16 +18,17 @@ class LiquidTaxSystem(models.Model):
     @api.depends('amount_type')
     def base_includes_discount(self):
         for tax in self:
-            tax.include_discount = tax.amount_type[:4] in ('cons', 'pfl')
+            tax.include_discount = tax.amount_type in ('cons', 'pfl')
 
     amount_type = fields.Selection(default='percent', string="Tax Computation", required=True,
-                                   selection=[('group', 'Group of Taxes'), ('fixed', 'Fixed'),
-                                              ('percent', 'Percentage of Price'),
-                                              ('division', 'Percentage of Price Tax Included'),
-                                              ('cons_percent', 'CONS-%'), ('cons_300', 'CONS-300'),
-                                              ('cons_125', 'CONS-125'), ('cons_0', 'CONS-0'),
-                                              ('tva', 'TVA-%'), ('pfl', 'PFL-%')
-                                              ],
+                                   selection=[
+                                       ('group', 'Group of Taxes'), ('fixed', 'Fixed'),
+                                       ('percent', 'Percentage of Price'),
+                                       ('division', 'Percentage of Price Tax Included'),
+                                       ('cons_percent', 'CONS_%'), ('cons_300', 'CONS-300'),
+                                       ('cons_125', 'CONS_125'), ('cons_0', 'CONS_0'),
+                                       ('tva', 'TVA_%'), ('pfl', 'PFL_%')
+                                   ],
                                    help="""
        - Group of Taxes: The tax is a set of sub taxes.
        - Fixed: The tax amount stays the same whatever the price.
@@ -38,11 +39,6 @@ class LiquidTaxSystem(models.Model):
            e.g 180 / (1 - 10%) = 200 (not price included)
            e.g 200 * (1 - 10%) = 180 (price included)
            """)
-
-    # group = fields.Selection(
-    #     [('cons_percent', 'CONS-%'), ('cons_300', 'CONS-300'), ('cons_125', 'CONS-125'), ('cons_0', 'CONS-0'),
-    #      ('tva', 'TVA-18%'), ('pfl', 'PFL-0.42%')],
-    #     string='Tax Group', required=True)
 
     def _compute_amount(self, base_amount, price_unit, quantity=1.0, product=None, partner=None,
                         product_packaging=None):

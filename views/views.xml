@@ -10,5 +10,22 @@
         </xpath>
       </field>
     </record>
+
+    <record id="view_tax_form_ext" model="ir.ui.view">
+      <field name="name">account.tax.form</field>
+      <field name="model">account.tax</field>
+      <field name="inherit_id" ref="account.view_tax_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//label[@for='amount']" position="replace">
+          <label for="amount" attrs="{'invisible':[('amount_type','not in', ('fixed', 'percent', 'division','pfl','tva','cons_percent'))]}"/>
+        </xpath>
+        <xpath expr="//group[1]//div[1]" position="replace">
+          <div attrs="{'invisible':[('amount_type','not in', ('fixed', 'percent', 'division','pfl','tva','cons_percent'))]}">
+            <field name="amount" class="oe_inline"/>
+            <span class="o_form_label oe_inline" attrs="{'invisible':[('amount_type','=','fixed','pfl','tva','cons_percent')]}">%</span>
+          </div>
+        </xpath>
+      </field>
+    </record>
   </data>
 </odoo>
