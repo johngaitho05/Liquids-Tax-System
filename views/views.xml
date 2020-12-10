@@ -1,12 +1,12 @@
 <odoo>
   <data>
     <record id="product_packaging_form_ext" model="ir.ui.view">
-      <field name="name">product.packaging.form.view</field>
-      <field name="model">product.packaging</field>
-      <field name="inherit_id" ref="product.product_packaging_form_view"/>
+      <field name="name">product.template.product.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
       <field name="arch" type="xml">
         <xpath expr="//field[@name='barcode']" position="before">
-          <field name="capacity" />
+          <field name="packaging_info"/>
         </xpath>
       </field>
     </record>
@@ -25,6 +25,23 @@
             <span class="o_form_label oe_inline" attrs="{'invisible':[('amount_type','=','fixed','pfl','tva','cons_percent')]}">%</span>
           </div>
         </xpath>
+      </field>
+    </record>
+
+    <record id="product_packaging_info_form_view" model="ir.ui.view">
+      <field name="name">product.packaging.info</field>
+      <field name="model">packaging.info</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <label class="oe_edit_only" for="name" string="Name"/>
+            <h1><field name="name" placeholder="Display Name"/></h1>
+            <group>
+              <group><field name="qty"/></group>
+              <group><field name="capacity"/></group>
+            </group>
+          </sheet>
+        </form>
       </field>
     </record>
   </data>

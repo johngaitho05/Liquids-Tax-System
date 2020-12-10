@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_liquid_tax_system_liquid_tax_system,liquid_tax_system.liquid_tax_system,model_liquid_tax_system_liquid_tax_system,base.group_user,1,1,1,1
+access_packaging_info,packaging.info,model_packaging_info,base.group_user,1,1,1,1
